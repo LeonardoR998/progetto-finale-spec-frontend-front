@@ -13,7 +13,7 @@ export default function Detail() {
     axios
       .get(`http://localhost:3001/smartphones/${id}`)
       .then((res) => {
-        setPhone(res.data.smartphone || res.data); // Adatta se la risposta ha smartphone dentro
+        setPhone(res.data.smartphone || res.data);
         setLoading(false);
       })
       .catch(() => {
@@ -29,62 +29,74 @@ export default function Detail() {
   return (
     <div
       className="container mt-4"
-      style={{
-        maxWidth: "600px",
-        margin: "auto",
-        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-      }}
+      style={{ maxWidth: "600px", margin: "auto" }}
     >
-      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
+      <h1 className="mb-4 text-center">
+        <i className="fa-solid fa-mobile-screen-button me-2 text-info"></i>
         {phone.title}
       </h1>
+
       {phone.image && (
         <img
           src={`public/image/${phone.image}`}
           alt={phone.title}
-          style={{
-            width: "100%",
-            borderRadius: "12px",
-            marginBottom: "25px",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-          }}
+          className="img-fluid rounded mb-4 shadow-sm"
+          style={{ width: "100%" }}
         />
       )}
-      <div style={{ lineHeight: "1.6", fontSize: "16px", color: "#333" }}>
-        <p>
-          <strong>Category:</strong> {phone.category}
-        </p>
-        <p>
-          <strong>Brand:</strong> {phone.brand}
-        </p>
-        <p>
-          <strong>Price:</strong> ${phone.price}
-        </p>
-        <p>
-          <strong>Release Year:</strong> {phone.releaseYear}
-        </p>
-        <p>
-          <strong>Screen Size:</strong> {phone.screenSize} inches
-        </p>
-        <p>
-          <strong>Storage:</strong> {phone.storage}
-        </p>
-        <p>
-          <strong>RAM:</strong> {phone.ram}
-        </p>
-        <p>
-          <strong>Battery:</strong> {phone.battery}
-        </p>
-        <p>
-          <strong>Camera:</strong> {phone.camera}
-        </p>
-        <p>
-          <strong>Weight:</strong> {phone.weight} grams
-        </p>
-        <p>
-          <strong>Description:</strong> {phone.description}
-        </p>
-      </div>
+
+      <ul
+        className="list-unstyled"
+        style={{ fontSize: "16px", lineHeight: "1.6", color: "#333" }}
+      >
+        <li>
+          <i className="fa-solid fa-tags me-2 text-secondary"></i>
+          <strong>Category:</strong> {phone.category || "N/A"}
+        </li>
+        <li>
+          <i className="fa-solid fa-industry me-2 text-secondary"></i>
+          <strong>Brand:</strong> {phone.brand || "N/A"}
+        </li>
+        <li>
+          <i className="fa-solid fa-dollar-sign me-2 text-secondary"></i>
+          <strong>Price:</strong>{" "}
+          {phone.price !== undefined ? `$${phone.price}` : "N/A"}
+        </li>
+        <li>
+          <i className="fa-solid fa-calendar-alt me-2 text-secondary"></i>
+          <strong>Release Year:</strong> {phone.releaseYear || "N/A"}
+        </li>
+        <li>
+          <i className="fa-solid fa-display me-2 text-secondary"></i>
+          <strong>Screen Size:</strong>{" "}
+          {phone.screenSize ? `${phone.screenSize} inches` : "N/A"}
+        </li>
+        <li>
+          <i className="fa-solid fa-hard-drive me-2 text-secondary"></i>
+          <strong>Storage:</strong> {phone.storage || "N/A"}
+        </li>
+        <li>
+          <i className="fa-solid fa-memory me-2 text-secondary"></i>
+          <strong>RAM:</strong> {phone.ram || "N/A"}
+        </li>
+        <li>
+          <i className="fa-solid fa-battery-full me-2 text-secondary"></i>
+          <strong>Battery:</strong> {phone.battery || "N/A"}
+        </li>
+        <li>
+          <i className="fa-solid fa-camera me-2 text-secondary"></i>
+          <strong>Camera:</strong> {phone.camera || "N/A"}
+        </li>
+        <li>
+          <i className="fa-solid fa-weight-scale me-2 text-secondary"></i>
+          <strong>Weight:</strong>{" "}
+          {phone.weight ? `${phone.weight} grams` : "N/A"}
+        </li>
+        <li>
+          <i className="fa-solid fa-align-left me-2 text-secondary"></i>
+          <strong>Description:</strong> {phone.description || "N/A"}
+        </li>
+      </ul>
     </div>
   );
 }

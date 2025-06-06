@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { FavoritesContext } from "../contexts/FavoritesContext";
+import { CompareContext } from "../contexts/CompareContext";
 
 export default function Home() {
   const [phones, setPhones] = useState([]);
@@ -12,10 +13,11 @@ export default function Home() {
 
   const { addToFavorites, removeFromFavorites, isFavorite } =
     useContext(FavoritesContext);
+  const { compareList, addToCompare, removeFromCompare, isInCompare } =
+    useContext(CompareContext);
 
   useEffect(() => {
     let url = "http://localhost:3001/smartphones";
-
     const query = [];
     if (search) query.push(`search=${search}`);
     if (category) query.push(`category=${category}`);
@@ -36,12 +38,31 @@ export default function Home() {
 
   const uniqueCategories = [...new Set(phones.map((p) => p.category))];
 
+  const handleCompareClick = async (phone) => {
+    if (isInCompare(phone.id)) {
+      removeFromCompare(phone.id);
+      return;
+    }
+    if (compareList.length >= 2) return;
+
+    try {
+      const res = await axios.get(
+        `http://localhost:3001/smartphones/${phone.id}`
+      );
+      const fullPhone = res.data.smartphone || res.data;
+      addToCompare(fullPhone);
+    } catch (error) {
+      console.error("Errore fetch dettagli telefono:", error);
+    }
+  };
+
   return (
     <div className="container mt-4">
-      <h1 className="mb-4">Smartphones</h1>
+      <h1 className="mb-4 text-center">Smartphones</h1>
 
+      {/* FILTRI */}
       <div className="row mb-4">
-        <div className="col-md-4">
+        <div className="col-md-4 mb-2">
           <input
             type="text"
             placeholder="Cerca per titolo..."
@@ -50,7 +71,7 @@ export default function Home() {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <div className="col-md-4">
+        <div className="col-md-4 mb-2">
           <select
             className="form-select"
             value={category}
@@ -64,7 +85,7 @@ export default function Home() {
             ))}
           </select>
         </div>
-        <div className="col-md-2">
+        <div className="col-md-2 mb-2">
           <select
             className="form-select"
             value={sortBy}
@@ -74,7 +95,7 @@ export default function Home() {
             <option value="category">Ordina per Categoria</option>
           </select>
         </div>
-        <div className="col-md-2">
+        <div className="col-md-2 mb-2">
           <select
             className="form-select"
             value={sortOrder}
@@ -86,41 +107,70 @@ export default function Home() {
         </div>
       </div>
 
-      <ul className="list-group">
+      {/* CARD LIST */}
+      <div className="row">
         {phones.map((phone) => (
-          <li
-            key={phone.id}
-            className="list-group-item d-flex justify-content-between align-items-center"
-          >
-            <div>
-              <strong>{phone.title}</strong> — {phone.category}
-            </div>
-            <div className="btn-group">
-              <Link
-                to={`/detail/${phone.id}`}
-                className="btn btn-primary btn-sm"
-              >
-                Dettagli
-              </Link>
-              {isFavorite(phone.id) ? (
-                <button
-                  className="btn btn-warning btn-sm"
-                  onClick={() => removeFromFavorites(phone.id)}
-                >
-                  ★
-                </button>
-              ) : (
-                <button
-                  className="btn btn-outline-secondary btn-sm"
-                  onClick={() => addToFavorites(phone)}
-                >
-                  ☆
-                </button>
+          <div key={phone.id} className="col-md-4 mb-4">
+            <div className="card h-100 shadow-sm border-0">
+              {phone.image && (
+                <img
+                  src={`public/image/${phone.image}`}
+                  className="card-img-top"
+                  alt={phone.title}
+                  style={{ objectFit: "cover", height: "200px" }}
+                />
               )}
+              <div className="card-body d-flex flex-column">
+                <h5 className="card-title">{phone.title}</h5>
+                <p className="card-text text-muted mb-2">
+                  Categoria: {phone.category}
+                </p>
+                <div className="mt-auto d-flex flex-wrap gap-2">
+                  <Link
+                    to={`/detail/${phone.id}`}
+                    className="btn btn-primary btn-sm"
+                  >
+                    Dettagli
+                  </Link>
+
+                  <button
+                    className={`btn btn-sm ${
+                      isFavorite(phone.id)
+                        ? "btn-warning"
+                        : "btn-outline-secondary"
+                    }`}
+                    onClick={() =>
+                      isFavorite(phone.id)
+                        ? removeFromFavorites(phone.id)
+                        : addToFavorites(phone)
+                    }
+                    title="Preferito"
+                  >
+                    {isFavorite(phone.id) ? "★" : "☆"}
+                  </button>
+
+                  <button
+                    className={`btn btn-sm ${
+                      isInCompare(phone.id)
+                        ? "btn-danger"
+                        : "btn-outline-success"
+                    }`}
+                    onClick={() => handleCompareClick(phone)}
+                    disabled={!isInCompare(phone.id) && compareList.length >= 2}
+                    title={
+                      compareList.length >= 2 && !isInCompare(phone.id)
+                        ? "Puoi confrontare solo 2 elementi"
+                        : ""
+                    }
+                  >
+                    {isInCompare(phone.id) ? "Rimuovi" : "Confronta"}
+                  </button>
+                </div>
+              </div>
             </div>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
