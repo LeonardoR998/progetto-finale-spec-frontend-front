@@ -1,14 +1,14 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 export const CompareContext = createContext();
 
 export const CompareProvider = ({ children }) => {
   const [compareList, setCompareList] = useState([]);
 
-  const addToCompare = (item) => {
+  const addToCompare = (phone) => {
     setCompareList((prev) => {
-      if (prev.find((p) => p.id === item.id) || prev.length >= 2) return prev;
-      return [...prev, item];
+      if (prev.some((item) => item.id === phone.id)) return prev;
+      return [...prev, phone];
     });
   };
 
@@ -16,11 +16,11 @@ export const CompareProvider = ({ children }) => {
     setCompareList((prev) => prev.filter((item) => item.id !== id));
   };
 
+  const clearCompare = () => setCompareList([]);
+
   const isInCompare = (id) => {
     return compareList.some((item) => item.id === id);
   };
-
-  const clearCompare = () => setCompareList([]);
 
   return (
     <CompareContext.Provider
@@ -28,8 +28,8 @@ export const CompareProvider = ({ children }) => {
         compareList,
         addToCompare,
         removeFromCompare,
-        isInCompare,
         clearCompare,
+        isInCompare,
       }}
     >
       {children}
