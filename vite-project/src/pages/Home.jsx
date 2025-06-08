@@ -57,8 +57,11 @@ export default function Home() {
   };
 
   return (
-    <div className="container mt-4">
-      <h1 className="mb-4 text-center">Smartphones</h1>
+    <div
+      className="container mt-4"
+      style={{ fontFamily: "Segoe UI, sans-serif", minHeight: "100vh" }}
+    >
+      <h1 className="mb-4 text-center text-dark">Smartphones</h1>
 
       {/* FILTRI */}
       <div className="row mb-4">
@@ -108,24 +111,33 @@ export default function Home() {
       </div>
 
       {/* CARD LIST */}
-      <div className="row">
+      <div className="row justify-content-center">
         {phones.map((phone) => (
-          <div key={phone.id} className="col-md-4 mb-4">
-            <div className="card h-100 shadow-sm border-0">
+          <div
+            key={phone.id}
+            className="col-md-4 mb-4 d-flex align-items-stretch"
+          >
+            <div
+              className="card h-100 shadow-sm border-0"
+              style={{ backgroundColor: "#ffffff", color: "#000000" }}
+            >
               {phone.image && (
                 <img
-                  src={`public/image/${phone.image}`}
+                  src={`/img/${phone.image}`}
                   className="card-img-top"
                   alt={phone.title}
                   style={{ objectFit: "cover", height: "200px" }}
                 />
               )}
+
               <div className="card-body d-flex flex-column">
-                <h5 className="card-title">{phone.title}</h5>
-                <p className="card-text text-muted mb-2">
+                <h5 className="card-title text-center text-dark">
+                  {phone.title}
+                </h5>
+                <p className="card-text text-muted mb-2 text-center">
                   Categoria: {phone.category}
                 </p>
-                <div className="mt-auto d-flex flex-wrap gap-2">
+                <div className="mt-auto d-flex flex-wrap justify-content-center gap-2">
                   <Link
                     to={`/detail/${phone.id}`}
                     className="btn btn-primary btn-sm"

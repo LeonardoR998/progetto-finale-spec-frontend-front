@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
 import { CompareContext, CompareProvider } from "./contexts/CompareContext";
+import "./App.css";
+
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Detail from "./pages/Detail";
