@@ -1,8 +1,17 @@
+// Home.jsx
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FavoritesContext } from "../contexts/FavoritesContext";
 import { CompareContext } from "../contexts/CompareContext";
+import ModernButton from "../components/ModernButton";
+import {
+  headingStyle,
+  subheadingStyle,
+  cardStyle,
+  cardTitleStyle,
+  cardTextStyle,
+} from "../styles";
 
 export default function Home() {
   const [phones, setPhones] = useState([]);
@@ -10,6 +19,7 @@ export default function Home() {
   const [category, setCategory] = useState("");
   const [sortBy, setSortBy] = useState("title");
   const [sortOrder, setSortOrder] = useState("asc");
+  const navigate = useNavigate();
 
   const { addToFavorites, removeFromFavorites, isFavorite } =
     useContext(FavoritesContext);
@@ -61,7 +71,12 @@ export default function Home() {
       className="container mt-4"
       style={{ fontFamily: "Segoe UI, sans-serif", minHeight: "100vh" }}
     >
-      <h1 className="mb-4 text-center text-dark">Smartphones</h1>
+      <h1 className="mb-4" style={headingStyle}>
+        Smartphones
+      </h1>
+      <h2 style={subheadingStyle}>
+        Filtra e confronta i tuoi modelli preferiti
+      </h2>
 
       {/* FILTRI */}
       <div className="row mb-4">
@@ -117,10 +132,7 @@ export default function Home() {
             key={phone.id}
             className="col-md-4 mb-4 d-flex align-items-stretch"
           >
-            <div
-              className="card h-100 shadow-sm border-0"
-              style={{ backgroundColor: "#ffffff", color: "#000000" }}
-            >
+            <div className="card h-100 shadow-sm border-0" style={cardStyle}>
               {phone.image && (
                 <img
                   src={`/img/${phone.image}`}
@@ -129,45 +141,29 @@ export default function Home() {
                   style={{ objectFit: "cover", height: "200px" }}
                 />
               )}
-
               <div className="card-body d-flex flex-column">
-                <h5 className="card-title text-center text-dark">
-                  {phone.title}
-                </h5>
-                <p className="card-text text-muted mb-2 text-center">
-                  Categoria: {phone.category}
-                </p>
+                <h5 style={cardTitleStyle}>{phone.title}</h5>
+                <p style={cardTextStyle}>Categoria: {phone.category}</p>
                 <div className="mt-auto d-flex flex-wrap justify-content-center gap-2">
-                  <Link
-                    to={`/detail/${phone.id}`}
-                    className="btn btn-primary btn-sm"
-                  >
+                  <ModernButton onClick={() => navigate(`/detail/${phone.id}`)}>
                     Dettagli
-                  </Link>
+                  </ModernButton>
 
-                  <button
-                    className={`btn btn-sm ${
-                      isFavorite(phone.id)
-                        ? "btn-warning"
-                        : "btn-outline-secondary"
-                    }`}
+                  <ModernButton
                     onClick={() =>
                       isFavorite(phone.id)
                         ? removeFromFavorites(phone.id)
                         : addToFavorites(phone)
                     }
+                    primary={isFavorite(phone.id)}
                     title="Preferito"
                   >
                     {isFavorite(phone.id) ? "★" : "☆"}
-                  </button>
+                  </ModernButton>
 
-                  <button
-                    className={`btn btn-sm ${
-                      isInCompare(phone.id)
-                        ? "btn-danger"
-                        : "btn-outline-success"
-                    }`}
+                  <ModernButton
                     onClick={() => handleCompareClick(phone)}
+                    primary={isInCompare(phone.id)}
                     disabled={!isInCompare(phone.id) && compareList.length >= 2}
                     title={
                       compareList.length >= 2 && !isInCompare(phone.id)
@@ -176,7 +172,7 @@ export default function Home() {
                     }
                   >
                     {isInCompare(phone.id) ? "Rimuovi" : "Confronta"}
-                  </button>
+                  </ModernButton>
                 </div>
               </div>
             </div>

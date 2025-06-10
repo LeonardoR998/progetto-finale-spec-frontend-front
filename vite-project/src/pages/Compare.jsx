@@ -1,5 +1,11 @@
 import { useContext } from "react";
 import { CompareContext } from "../contexts/CompareContext";
+import {
+  headingStyle,
+  cardStyle,
+  cardTitleStyle,
+  cardTextStyle,
+} from "../styles";
 
 export default function Compare() {
   const { compareList, removeFromCompare } = useContext(CompareContext);
@@ -10,7 +16,9 @@ export default function Compare() {
         className="container mt-4"
         style={{ fontFamily: "Segoe UI, sans-serif", minHeight: "100vh" }}
       >
-        <h1 className="mb-4 text-center text-dark">Confronta Smartphone</h1>
+        <h1 className="mb-4" style={headingStyle}>
+          Confronta Smartphone
+        </h1>
         <p className="text-center text-muted">
           Nessuno smartphone selezionato per il confronto.
         </p>
@@ -22,21 +30,15 @@ export default function Compare() {
       className="container mt-4"
       style={{ fontFamily: "Segoe UI, sans-serif", minHeight: "100vh" }}
     >
-      <h1 className="mb-4 text-center text-dark">Confronta Smartphone</h1>
-
+      <h1 className="mb-4" style={headingStyle}>
+        Confronta Smartphone
+      </h1>
       <div className="d-flex justify-content-center gap-4 flex-wrap">
         {compareList.map((phone) => (
           <div
             key={phone.id}
-            className="card shadow-sm border-0"
-            style={{
-              backgroundColor: "#f5f5f5",
-              color: "#000",
-              width: "300px",
-              minHeight: "450px",
-              display: "flex",
-              flexDirection: "column",
-            }}
+            className="card shadow border-0"
+            style={{ ...cardStyle, width: "300px", minHeight: "450px" }}
           >
             {phone.image && (
               <img
@@ -46,14 +48,9 @@ export default function Compare() {
                 style={{ objectFit: "cover", height: "200px" }}
               />
             )}
-
             <div className="card-body d-flex flex-column">
-              <h5 className="card-title text-center text-dark">
-                {phone.title}
-              </h5>
-              <p className="text-muted mb-2 text-center">
-                Categoria: {phone.category}
-              </p>
+              <h5 style={cardTitleStyle}>{phone.title}</h5>
+              <p style={cardTextStyle}>Categoria: {phone.category}</p>
               <p className="card-text flex-grow-1">
                 {phone.description || "-"}
               </p>
@@ -70,11 +67,9 @@ export default function Compare() {
               <p className="text-center fw-bold">
                 Fotocamera: {phone.camera || "-"}
               </p>
-
               <button
                 className="btn btn-danger btn-sm mt-auto"
                 onClick={() => removeFromCompare(phone.id)}
-                title="Rimuovi dal confronto"
               >
                 Rimuovi
               </button>

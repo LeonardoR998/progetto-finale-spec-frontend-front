@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import {
+  headingStyle,
+  subheadingStyle,
+  cardStyle,
+  cardTitleStyle,
+  cardTextStyle,
+} from "../styles";
 
 export default function Detail() {
   const { id } = useParams();
@@ -29,13 +36,16 @@ export default function Detail() {
   return (
     <div className="container py-5 d-flex justify-content-center">
       <div
-        className="card shadow-sm border-0 bg-light p-4"
-        style={{ maxWidth: "700px", width: "100%" }}
+        className="card shadow-lg border-0 bg-light p-4"
+        style={{ ...cardStyle, maxWidth: "700px", width: "100%" }}
       >
-        <h1 className="text-center text-dark mb-4">
-          <i className="fa-solid fa-mobile-screen-button me-2 text-primary"></i>
+        <h1 className="text-center mb-4" style={headingStyle}>
           {phone.title}
         </h1>
+
+        <h5 className="text-center mb-3" style={subheadingStyle}>
+          Tutti i dettagli tecnici del dispositivo
+        </h5>
 
         {phone.image && (
           <img

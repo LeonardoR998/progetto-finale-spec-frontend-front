@@ -4,11 +4,26 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav
+      className="navbar navbar-expand-lg"
+      style={{ backgroundColor: "#f8f9fa" }}
+    >
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
-          Smartphone Comparator
+        <Link
+          className="navbar-brand"
+          to="/"
+          style={{
+            fontFamily: "'Orbitron', sans-serif",
+            fontSize: "1.8rem",
+            fontWeight: "700",
+            color: "#0d6efd",
+            letterSpacing: "1px",
+            textTransform: "uppercase",
+          }}
+        >
+          TechSphere
         </Link>
+
         <button
           className="navbar-toggler"
           type="button"
@@ -24,7 +39,7 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link active" to="/">
+              <Link className="nav-link" to="/">
                 Home
               </Link>
             </li>
@@ -50,7 +65,7 @@ function Navbar() {
               placeholder="Search"
               aria-label="Search"
             />
-            <button className="btn btn-outline-success" type="submit">
+            <button className="btn btn-outline-primary" type="submit">
               Search
             </button>
           </form>
