@@ -17,7 +17,7 @@ export default function Favorites() {
       className="container mt-4"
       style={{ fontFamily: "Segoe UI, sans-serif", minHeight: "100vh" }}
     >
-      <h1 className="mb-4" style={headingStyle}>
+      <h1 className="mt-5 mb-5" style={headingStyle}>
         Preferiti
       </h1>
 
@@ -53,13 +53,13 @@ export default function Favorites() {
                       to={`/detail/${phone.id}`}
                       className="btn btn-primary btn-sm me-2"
                     >
-                      Dettagli
+                      <i className="fa-solid fa-circle-info fa-lg"></i>
                     </Link>
                     <button
-                      className="btn btn-warning btn-sm"
+                      className="btn btn-danger btn-sm"
                       onClick={() => removeFromFavorites(phone.id)}
                     >
-                      Rimuovi
+                      <i className="fa-solid fa-trash fa-lg"></i>
                     </button>
                   </div>
                 </div>

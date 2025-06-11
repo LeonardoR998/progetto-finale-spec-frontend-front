@@ -1,4 +1,3 @@
-// src/styles.js
 export const headingStyle = {
   fontFamily: "'Orbitron', sans-serif",
   fontSize: "2.2rem",
