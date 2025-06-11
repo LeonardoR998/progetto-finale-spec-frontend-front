@@ -1,10 +1,11 @@
-// Home.jsx
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { FavoritesContext } from "../contexts/FavoritesContext";
 import { CompareContext } from "../contexts/CompareContext";
 import ModernButton from "../components/ModernButton";
+import { getImageForTitle } from "../utils/imageMap";
+
 import {
   headingStyle,
   subheadingStyle,
@@ -133,14 +134,13 @@ export default function Home() {
             className="col-md-4 mb-4 d-flex align-items-stretch"
           >
             <div className="card h-100 shadow-sm border-0" style={cardStyle}>
-              {phone.image && (
-                <img
-                  src={`/img/${phone.image}`}
-                  className="card-img-top"
-                  alt={phone.title}
-                  style={{ objectFit: "cover", height: "200px" }}
-                />
-              )}
+              <img
+                src={getImageForTitle(phone.title)}
+                className="card-img-top"
+                alt={phone.title}
+                style={{ objectFit: "cover", height: "200px" }}
+              />
+
               <div className="card-body d-flex flex-column">
                 <h5 style={cardTitleStyle}>{phone.title}</h5>
                 <p style={cardTextStyle}>Categoria: {phone.category}</p>

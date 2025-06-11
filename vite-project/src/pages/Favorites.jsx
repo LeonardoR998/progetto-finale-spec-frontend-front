@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { FavoritesContext } from "../contexts/FavoritesContext";
+import { getImageForTitle } from "../utils/imageMap";
 import {
   headingStyle,
   cardStyle,
@@ -32,14 +33,13 @@ export default function Favorites() {
               className="col-md-4 mb-4 d-flex align-items-stretch"
             >
               <div className="card h-100 shadow border-0" style={cardStyle}>
-                {phone.image && (
-                  <img
-                    src={`/img/${phone.image}`}
-                    className="card-img-top"
-                    alt={phone.title}
-                    style={{ objectFit: "cover", height: "200px" }}
-                  />
-                )}
+                <img
+                  src={getImageForTitle(phone.title)}
+                  className="card-img-top"
+                  alt={phone.title}
+                  style={{ objectFit: "cover", height: "200px" }}
+                />
+
                 <div className="card-body d-flex flex-column">
                   <h5 style={cardTitleStyle}>{phone.title}</h5>
                   <p style={cardTextStyle}>Categoria: {phone.category}</p>

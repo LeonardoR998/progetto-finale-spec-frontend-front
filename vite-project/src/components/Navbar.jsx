@@ -39,18 +39,20 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link" to="/">
-                Home
-              </Link>
+              <li className="nav-item">
+                <Link className="nav-link" to="/">
+                  <i className="fa-solid fa-house fa-lg"></i>
+                </Link>
+              </li>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/compare">
-                Compare
+                <i className="fa-solid fa-clone fa-lg"></i>
               </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/favorites">
-                Favorites
+                <i className="fa-solid fa-star fa-lg"></i>
               </Link>
             </li>
           </ul>
@@ -66,7 +68,7 @@ function Navbar() {
               aria-label="Search"
             />
             <button className="btn btn-outline-primary" type="submit">
-              Search
+              <i className="fa-solid fa-magnifying-glass"></i>
             </button>
           </form>
         </div>

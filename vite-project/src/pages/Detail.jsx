@@ -1,13 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import {
-  headingStyle,
-  subheadingStyle,
-  cardStyle,
-  cardTitleStyle,
-  cardTextStyle,
-} from "../styles";
+import { headingStyle, subheadingStyle, cardStyle } from "../styles";
+import { getImageForTitle } from "../utils/imageMap";
 
 export default function Detail() {
   const { id } = useParams();
@@ -47,51 +42,60 @@ export default function Detail() {
           Tutti i dettagli tecnici del dispositivo
         </h5>
 
-        {phone.image && (
-          <img
-            src={`/img/${phone.image}`}
-            alt={phone.title}
-            className="img-fluid rounded mb-4"
-            style={{ objectFit: "cover", height: "300px", width: "100%" }}
-          />
-        )}
+        <img
+          src={getImageForTitle(phone.title)}
+          alt={phone.title}
+          className="img-fluid rounded mb-4"
+          style={{ objectFit: "cover", height: "300px", width: "100%" }}
+        />
 
         <ul
           className="list-unstyled fs-6 text-dark"
           style={{ lineHeight: "1.7" }}
         >
           <li>
+            <i className="fa-solid fa-tags me-2 text-primary"></i>
             <strong>Categoria:</strong> {phone.category || "N/A"}
           </li>
           <li>
+            <i className="fa-solid fa-industry me-2 text-secondary"></i>
             <strong>Marca:</strong> {phone.brand || "N/A"}
           </li>
           <li>
+            <i className="fa-solid fa-dollar-sign me-2 text-success"></i>
             <strong>Prezzo:</strong> {phone.price ? `$${phone.price}` : "N/A"}
           </li>
           <li>
+            <i className="fa-solid fa-calendar me-2 text-info"></i>
             <strong>Anno di uscita:</strong> {phone.releaseYear || "N/A"}
           </li>
           <li>
+            <i className="fa-solid fa-mobile-screen-button me-2 text-dark"></i>
             <strong>Display:</strong>{" "}
             {phone.screenSize ? `${phone.screenSize} pollici` : "N/A"}
           </li>
           <li>
+            <i className="fa-solid fa-database me-2 text-warning"></i>
             <strong>Memoria:</strong> {phone.storage || "N/A"}
           </li>
           <li>
+            <i className="fa-solid fa-memory me-2 text-danger"></i>
             <strong>RAM:</strong> {phone.ram || "N/A"}
           </li>
           <li>
+            <i className="fa-solid fa-battery-full me-2 text-success"></i>
             <strong>Batteria:</strong> {phone.battery || "N/A"}
           </li>
           <li>
+            <i className="fa-solid fa-camera me-2 text-secondary"></i>
             <strong>Fotocamera:</strong> {phone.camera || "N/A"}
           </li>
           <li>
+            <i className="fa-solid fa-weight-hanging me-2 text-dark"></i>
             <strong>Peso:</strong> {phone.weight ? `${phone.weight}g` : "N/A"}
           </li>
           <li>
+            <i className="fa-solid fa-align-left me-2 text-muted"></i>
             <strong>Descrizione:</strong>{" "}
             {phone.description || "Nessuna descrizione disponibile."}
           </li>

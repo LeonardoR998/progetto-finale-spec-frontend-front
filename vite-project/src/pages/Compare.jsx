@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { CompareContext } from "../contexts/CompareContext";
+import { getImageForTitle } from "../utils/imageMap";
 import {
   headingStyle,
   cardStyle,
@@ -40,14 +41,13 @@ export default function Compare() {
             className="card shadow border-0"
             style={{ ...cardStyle, width: "300px", minHeight: "450px" }}
           >
-            {phone.image && (
-              <img
-                src={`/img/${phone.image}`}
-                className="card-img-top"
-                alt={phone.title}
-                style={{ objectFit: "cover", height: "200px" }}
-              />
-            )}
+            <img
+              src={getImageForTitle(phone.title)}
+              className="card-img-top"
+              alt={phone.title}
+              style={{ objectFit: "cover", height: "200px" }}
+            />
+
             <div className="card-body d-flex flex-column">
               <h5 style={cardTitleStyle}>{phone.title}</h5>
               <p style={cardTextStyle}>Categoria: {phone.category}</p>
