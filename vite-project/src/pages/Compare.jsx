@@ -45,7 +45,12 @@ export default function Compare() {
               src={getImageForTitle(phone.title)}
               className="card-img-top"
               alt={phone.title}
-              style={{ objectFit: "cover", height: "200px" }}
+              style={{
+                objectFit: "cover",
+                height: "400px",
+                width: "100%",
+                borderRadius: "8px",
+              }}
             />
 
             <div className="card-body d-flex flex-column">

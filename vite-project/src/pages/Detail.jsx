@@ -46,7 +46,12 @@ export default function Detail() {
           src={getImageForTitle(phone.title)}
           alt={phone.title}
           className="img-fluid rounded mb-4"
-          style={{ objectFit: "cover", height: "300px", width: "100%" }}
+          style={{
+            objectFit: "cover",
+            height: "500px",
+            width: "100%",
+            borderRadius: "8px",
+          }}
         />
 
         <ul
